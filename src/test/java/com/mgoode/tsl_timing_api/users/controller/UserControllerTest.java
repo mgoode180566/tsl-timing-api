@@ -21,4 +21,5 @@ class UserControllerTest {
 	
 	@Autowired
 	ObjectMapper objectMapper;
+	
 }
