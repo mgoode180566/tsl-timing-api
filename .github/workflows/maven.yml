@@ -17,7 +17,9 @@ on:
 permissions:
   contents: read
   security-events: write  
+  checks: write
   actions: read
+  pull-requests: write
 
 jobs:
   build:
