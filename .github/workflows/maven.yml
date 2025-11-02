@@ -33,4 +33,10 @@ jobs:
         distribution: 'temurin'
         cache: maven
     - name: Build with Maven
-      run: mvn -B clean compile -Dmaven.compiler.parameters=true
+      run: mvn -B clean verify -Dmaven.compiler.parameters=true
+
+    - name: Upload build artifact
+      uses: actions/upload-artifact@v4
+      with:
+        name: tsl-timing-api
+        path: target/*.jar
