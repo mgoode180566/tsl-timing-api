@@ -127,7 +127,6 @@
 	            </configuration>
 	        </plugin>
 	
-	        <!-- Keep the Spring Boot plugin for packaging -->
 	        <plugin>
 	            <groupId>org.springframework.boot</groupId>
 	            <artifactId>spring-boot-maven-plugin</artifactId>
