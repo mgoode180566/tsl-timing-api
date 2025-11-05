@@ -1,11 +1,11 @@
 package com.mgoode.tsl_timing_api.users.dto.mapper;
 
-import com.mgoode.tsl_timing_api.users.dto.UserRequestDTO;
+import com.mgoode.tsl_timing_api.users.dto.RegistrationRequestDTO;
 import com.mgoode.tsl_timing_api.users.model.User;
 
 public class UserRequestMapper {
 	
-	public static User toEntity(UserRequestDTO userRequest) {
+	public static User toEntity(RegistrationRequestDTO userRequest) {
 		User user = new User();
 		user.setUserName(userRequest.getUserName());
 		user.setPassword(userRequest.getPassword());
@@ -17,8 +17,8 @@ public class UserRequestMapper {
 		return user;
 	};
 	
-	public static UserRequestDTO toRequestResult(User user) {
-		UserRequestDTO userRequest = new UserRequestDTO();
+	public static RegistrationRequestDTO toRequestResult(User user) {
+		RegistrationRequestDTO userRequest = new RegistrationRequestDTO();
 		userRequest.setId(user.getId());
 		userRequest.setFirstName(user.getFirstName());
 		userRequest.setLastName(user.getLastName());

@@ -2,7 +2,9 @@ package com.mgoode.tsl_timing_api.users.controller;
 
 import com.mgoode.tsl_timing_api.config.JwtProperties;
 import com.mgoode.tsl_timing_api.users.dto.LoginRequestDTO;
-import com.mgoode.tsl_timing_api.users.dto.UserRequestDTO;
+import com.mgoode.tsl_timing_api.users.dto.RegistrationRequestDTO;
+import com.mgoode.tsl_timing_api.users.dto.mapper.LoginResponseMapper;
+import com.mgoode.tsl_timing_api.users.dto.mapper.RegistrationResponseMapper;
 import com.mgoode.tsl_timing_api.users.dto.mapper.UserRequestMapper;
 import com.mgoode.tsl_timing_api.users.model.User;
 import com.mgoode.tsl_timing_api.users.service.UserService;
@@ -10,7 +12,6 @@ import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.web.bind.annotation.*;
@@ -29,10 +30,10 @@ public class UserController {
 	private final JwtProperties jwtProperties;
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> registerUser(@Valid @RequestBody UserRequestDTO userRequest) {
+	public ResponseEntity<Object> registerUser(@Valid @RequestBody RegistrationRequestDTO userRequest) {
 		User user = userService.registerUser(UserRequestMapper.toEntity(userRequest));
 		var response = new HashMap<String,Object>();
-		response.put("response", UserRequestMapper.toRequestResult(user));
+		response.put("response", RegistrationResponseMapper.registrationResponseDTO(user));
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);
 	}
 
@@ -42,7 +43,7 @@ public class UserController {
 			User user = userService.findUser(loginRequest.getUserName());
 			var loginInfo = new HashMap<String,Object>();
 			loginInfo.put("token", jwtProperties.createJwtUserToken(user));
-			loginInfo.put("response", UserRequestMapper.toRequestResult(user));
+			loginInfo.put("response", LoginResponseMapper.loginResponseDTO(user));
 			return ResponseEntity.ok(loginInfo);
 	}
 	
