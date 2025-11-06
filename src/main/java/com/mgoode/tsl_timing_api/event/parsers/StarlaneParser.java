@@ -1,6 +1,5 @@
 package com.mgoode.tsl_timing_api.event.parsers;
 
-import com.mgoode.tsl_timing_api.event.model.dto.LapDTO;
 import com.mgoode.tsl_timing_api.event.model.entities.Event;
 import com.mgoode.tsl_timing_api.event.model.entities.Lap;
 import com.mgoode.tsl_timing_api.event.model.entities.Sector;
@@ -51,7 +50,7 @@ public class StarlaneParser implements IGpsDataParser {
 		
 		Session session = new Session();
 		
-		sectors.forEach(sector -> { sector.setSession(session); });
+		sectors.forEach(sector -> sector.setSession(session));
 		session.getSectors().addAll(sectors);
 		
 		if (sessionData != null) {

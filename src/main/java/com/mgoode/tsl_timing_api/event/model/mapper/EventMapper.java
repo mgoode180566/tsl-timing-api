@@ -3,7 +3,6 @@ package com.mgoode.tsl_timing_api.event.model.mapper;
 import com.mgoode.tsl_timing_api.event.model.dto.EventDTO;
 import com.mgoode.tsl_timing_api.event.model.entities.Event;
 import com.mgoode.tsl_timing_api.event.model.entities.Session;
-import com.mgoode.tsl_timing_api.users.model.User;
 
 import java.util.stream.Collectors;
 

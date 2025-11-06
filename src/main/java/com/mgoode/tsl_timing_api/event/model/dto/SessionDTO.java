@@ -1,6 +1,5 @@
 package com.mgoode.tsl_timing_api.event.model.dto;
 
-import com.mgoode.tsl_timing_api.event.model.entities.Sector;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
