@@ -15,7 +15,7 @@ public class UserRequestMapper {
 //		user.setDateCreated(userRequest.getDateCreated());
 		user.getRoles().addAll(userRequest.getRoles());
 		return user;
-	};
+	}
 	
 	public static RegistrationRequestDTO toRequestResult(User user) {
 		RegistrationRequestDTO userRequest = new RegistrationRequestDTO();

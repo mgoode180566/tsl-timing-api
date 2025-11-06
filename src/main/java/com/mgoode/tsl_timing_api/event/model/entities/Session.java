@@ -29,9 +29,12 @@ public class Session {
 	
 	String track;
 	
-//	Bike bike;
-//
-//	Rider rider;
+	String bike;
+
+	String rider;
+	
+	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Sector> sectors = new ArrayList<>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "event_id")

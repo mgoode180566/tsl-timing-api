@@ -23,6 +23,7 @@ public class SessionDTO {
 	String date;
 	String time;
 	List<LapDTO> laps;
+	List<SectorDTO> sectors = new ArrayList<>();
 	Double bestLapTime;
 	
 	public SessionDTO(Long id, String sessionName, Long eventId, String rider, String bike, String track, String date, String time, List<LapDTO> laps) {

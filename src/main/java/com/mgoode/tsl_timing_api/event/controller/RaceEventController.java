@@ -1,6 +1,7 @@
 package com.mgoode.tsl_timing_api.event.controller;
 
 import com.mgoode.tsl_timing_api.event.model.dto.EventDTO;
+import com.mgoode.tsl_timing_api.event.model.dto.EventUploadDTO;
 import com.mgoode.tsl_timing_api.event.model.dto.RaceMeetingDTO;
 import com.mgoode.tsl_timing_api.event.model.dto.SessionDTO;
 import com.mgoode.tsl_timing_api.event.model.entities.Event;
@@ -12,20 +13,16 @@ import com.mgoode.tsl_timing_api.event.parsers.StarlaneParser;
 import com.mgoode.tsl_timing_api.event.service.EventService;
 import com.mgoode.tsl_timing_api.event.service.RaceMeetingService;
 import com.mgoode.tsl_timing_api.event.service.SessionService;
-import com.mgoode.tsl_timing_api.event.service.TSLPDFService;
 import com.mgoode.tsl_timing_api.users.model.User;
 import com.mgoode.tsl_timing_api.users.service.UserService;
-import lombok.AllArgsConstructor;
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
@@ -47,11 +44,22 @@ public class RaceEventController {
 	private final UserService userService;
 	
 	@PostMapping("/upload")
-	public EventDTO uploadAndParse(@RequestParam("file") MultipartFile file, Authentication authentication) throws IOException {
-			EventDTO eventDTO = starlaneParser.parse(file);
+	public EventDTO uploadAndParse(@Valid @ModelAttribute EventUploadDTO eventUploadDTO, @RequestParam("file") MultipartFile file, Authentication authentication) throws IOException {
+			Event event = starlaneParser.parse(file);
+			event.setEventName(eventUploadDTO.getEventName());
+			event.setEventDate(eventUploadDTO.getEventDate());
+			event.setEventType(eventUploadDTO.getEventType());
+			event.getSessions().forEach(s -> {s.setBike(eventUploadDTO.getBike());
+																									s.setTrack(eventUploadDTO.getCircuit());
+																									s.setRider(eventUploadDTO.getRider());});
+			
 			User persistentUser = userService.findUser(authentication.getName());
-			eventDTO.setUser(persistentUser);
-			eventService.save(eventDTO);
+			event.setUser(persistentUser);
+			eventService.save(event);
+			
+			EventDTO eventDTO = EventMapper.toDTO(event);
+			
+			
 			return eventDTO;
 	}
 	

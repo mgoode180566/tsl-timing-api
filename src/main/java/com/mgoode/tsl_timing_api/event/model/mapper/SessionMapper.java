@@ -27,11 +27,16 @@ public class SessionMapper {
 	public static SessionDTO toDTO(Session session) {
 		SessionDTO sessionDTO = new SessionDTO();
 		sessionDTO.setId(session.getId());
+		sessionDTO.setRider(session.getRider());
+		sessionDTO.setBike(session.getBike());
+		sessionDTO.setTrack(session.getTrack());
 		sessionDTO.setDate(session.getDate());
-		sessionDTO.setTime(sessionDTO.getTime());
+		sessionDTO.setTime(session.getTime());
 		sessionDTO.setSessionName(session.getSessionName());
 		sessionDTO.setLaps(session.getLaps().stream().map(LapMapper::toDTO).collect(Collectors.toList()));
 		sessionDTO.setBestLapTime(session.getBestLapTime());
+		sessionDTO.setEventId(session.getEvent().getId());
+		sessionDTO.setSectors(session.getSectors().stream().map(SectorMapper::toDTO).collect(Collectors.toList()));
 		return sessionDTO;
 	}
 }
