@@ -22,10 +22,8 @@ public class EventService {
 	private final EventRepository eventRepository;
 	private final StarlaneParser starlaneParser;
 	
-	public EventDTO save(EventDTO eventDTO) {
-		Event event = EventMapper.toEntity(eventDTO);
-		eventRepository.save(event);
-		return EventMapper.toDTO(event);
+	public Event save(Event event) {
+		return eventRepository.save(event);
 	}
 	
 	public Optional<Event> findEventById(Long id ) {
@@ -40,11 +38,11 @@ public class EventService {
 	
 	public List<Event> findAllEventsByUser(String name) { return eventRepository.findByUserUserName(name); }
 	
-	public EventDTO processFile(MultipartFile file) throws IOException {
+	public Event processFile(MultipartFile file) throws IOException {
 
-		EventDTO eventDTO = starlaneParser.parse(file);
+		Event event = starlaneParser.parse(file);
 		
-		return eventDTO;
+		return event;
 
 	}
 }

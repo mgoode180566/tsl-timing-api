@@ -30,8 +30,8 @@ public class UserController {
 	private final JwtProperties jwtProperties;
 	
 	@PostMapping("/register")
-	public ResponseEntity<Object> registerUser(@Valid @RequestBody RegistrationRequestDTO userRequest) {
-		User user = userService.registerUser(UserRequestMapper.toEntity(userRequest));
+	public ResponseEntity<Object> registerUser(@Valid @RequestBody RegistrationRequestDTO registrationRequestDTO) {
+		User user = userService.registerUser(UserRequestMapper.toEntity(registrationRequestDTO));
 		var response = new HashMap<String,Object>();
 		response.put("response", RegistrationResponseMapper.registrationResponseDTO(user));
 		return ResponseEntity.status(HttpStatus.CREATED).body(response);

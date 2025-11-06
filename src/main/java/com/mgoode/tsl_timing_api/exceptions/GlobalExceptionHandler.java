@@ -8,6 +8,7 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+import org.springframework.web.client.HttpClientErrorException;
 
 import javax.naming.AuthenticationException;
 import java.util.HashMap;
@@ -38,7 +39,7 @@ public class GlobalExceptionHandler {
 	@ExceptionHandler(BadCredentialsException.class)
 	public ResponseEntity<Map<String, String>> handleBadCredentials(BadCredentialsException ex) {
 		return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-			.body(Map.of("error", "Bad username or password"));
+			.body(Map.of("error", "Incorrect username or password"));
 	}
 	
 	@ExceptionHandler(AuthenticationException.class)
@@ -47,10 +48,9 @@ public class GlobalExceptionHandler {
 			.body(Map.of("error", "Authentication failed"));
 	}
 	
-	@ExceptionHandler(Exception.class)
-	public ResponseEntity<Map<String, String>> handleGeneralException(Exception ex) {
-		return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-			.body(Map.of("error", "An unexpected error occurred on the server"));
+	@ExceptionHandler(IllegalStateException.class)
+	public ResponseEntity<Map<String, String>> handleIllegalStateException(Exception ex) {
+		return ResponseEntity.status(HttpStatus.CONFLICT)
+			.body(Map.of("error", ex.getMessage()));
 	}
-	
 }

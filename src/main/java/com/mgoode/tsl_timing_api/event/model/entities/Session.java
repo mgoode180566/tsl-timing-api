@@ -5,6 +5,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.data.geo.Point;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -29,9 +30,12 @@ public class Session {
 	
 	String track;
 	
-//	Bike bike;
-//
-//	Rider rider;
+	String bike;
+
+	String rider;
+	
+	@OneToMany(mappedBy = "session", cascade = CascadeType.ALL, orphanRemoval = true)
+	List<Sector> sectors = new ArrayList<>();
 	
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "event_id")
